@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15          # Official PostgreSQL image
+    container_name: lab8-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tasksdb
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    container_name: lab8-app
+    ports:
+      - "3000:3000"
+    environment:
+      MODE: "docker"
+      DATABASE_URL: postgres://postgres:password@db:5432/tasksdb
+    depends_on:
+      - db
+
+volumes:
+  db-data:
+
+

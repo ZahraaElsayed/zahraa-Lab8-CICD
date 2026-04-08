@@ -10,6 +10,7 @@ const tasks = [
   { id: 3, name: 'Bread',         status: 'pending' },
   { id: 4, name: 'Butter',        status: 'pending' },
   { id: 5, name: 'Orange juice',  status: 'pending' },
+  { id: 7, name: 'Tea',           status: 'pending' } 
 ];
 
 // Route 1: basic info
@@ -22,11 +23,13 @@ app.get('/', (req, res) => {
   });
 });
 
-// Route 2: tasks grouped by status
-// Object.groupBy is only available in Node.js v21+.
-// On Node 18 this will throw: TypeError: Object.groupBy is not a function
+// Route 2: tasks grouped by status (Node 18 compatible)
 app.get('/tasks', (req, res) => {
-  const grouped = Object.groupBy(tasks, task => task.status);
+  const grouped = tasks.reduce((acc, task) => {
+    if (!acc[task.status]) acc[task.status] = [];
+    acc[task.status].push(task);
+    return acc;
+  }, {});
   res.json(grouped);
 });
 
@@ -36,6 +39,6 @@ app.listen(PORT, () => {
   console.log(`  Port:  ${PORT}`);
   console.log(`  Mode:  ${process.env.MODE || 'local'}`);
   console.log(`  Node:  ${process.version}`);
-  console.log(`  Host:    ${os.hostname()}`);
+  console.log(`  Host: ${os.hostname()}`);
   console.log('--------------------------------------------------');
 });
