@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXISTS tasks (
+  id     SERIAL PRIMARY KEY,
+  name   TEXT NOT NULL,
+  status TEXT NOT NULL
+);
+
+INSERT INTO tasks (id, name, status) VALUES
+  (1, 'Milk',         'done'),
+  (2, 'Eggs',         'done'),
+  (3, 'Bread',        'pending'),
+  (4, 'Butter',       'pending'),
+  (5, 'Orange juice', 'pending'),
+  (6, 'Tea',          'pending')
+ON CONFLICT (id) DO NOTHING;
