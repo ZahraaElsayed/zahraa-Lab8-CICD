@@ -16,9 +16,9 @@ jobs:
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.7
         with:
-          host: ${{ secrets.EC2_HOST }}       # IP أو hostname للـ EC2
-          username: ${{ secrets.EC2_USER }}   # user على الـ EC2 (مثلاً ubuntu)
-          key: ${{ secrets.EC2_SSH_KEY }}     # المفتاح اللي ضفته كـ secret
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
             cd ~/zahraa-Lab8-CICD
