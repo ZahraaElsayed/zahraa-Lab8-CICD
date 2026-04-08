@@ -1,25 +1,11 @@
-name: Deploy to EC2
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Deploy to EC2
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.EC2_HOST }}
-        username: ubuntu
-        key: ${{ secrets.EC2_SSH_KEY }}
-        script: |
-          cd ~/zahraa-Lab8-CICD
-          docker compose pull
-          docker compose up -d --build
+- name: Deploy to EC2
+  uses: appleboy/ssh-action@v0.1.7
+  with:
+    host: ${{ secrets.EC2_HOST }}        # IP أو hostname للـ EC2
+    username: ${{ secrets.EC2_USER }}    # user على الـ EC2 (مثلاً ubuntu)
+    key: ${{ secrets.EC2_SSH_KEY }}      # المفتاح اللي ضفته كـ secret
+    port: 22
+    script: |
+      cd ~/zahraa-Lab8-CICD
+      docker compose pull
+      docker compose up -d --build
