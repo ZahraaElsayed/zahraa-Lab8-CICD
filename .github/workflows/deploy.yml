@@ -8,10 +8,11 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          submodules: false  # مهم: تجاهل أي submodules
 
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.7
